@@ -1,0 +1,20 @@
+[
+{
+  "modid": "MM1",
+  "name": "My Mod 1",
+  "description": "Teaches me how to add blocks, slabs, entities and stuffs!",
+  "version": "@VERSION@",
+  "url": "",
+  "updateUrl": "",
+  "authorList": [
+    "TheCodeOff"
+  ],
+  "credits": "By myself",
+  "logoFile": "/assets/mm1/logo.png",
+  "screenshots": [
+  ],
+  "parent":"",
+  "dependencies": [
+  ]
+}
+]
