@@ -15,9 +15,13 @@ public class MyBlock extends Block {
 	 */
 	public static int UNI_TEXTURED = 0;
 	/**
-	 * Side textures also
+	 * One side texture also
 	 */
-	public static int SIDE_TEXTURED = 1;
+	public static int UNI_SIDE_TEXTURED = 1;
+	/**
+	 * Multiple side textures also
+	 */
+	public static int MULTI_SIDE_TEXTURED = 2;
 
 	public String localName;
 	private int textureStyle;
@@ -46,8 +50,13 @@ public class MyBlock extends Block {
 	public void registerIcons(IconRegister iconRegister) {
 		if (textureStyle == UNI_TEXTURED) {
 			this.blockIcon = iconRegister.registerIcon(Reference.ID.toLowerCase() + ":" + this.getUnlocalizedName());
-		} else if (textureStyle == SIDE_TEXTURED) {
+		} else if (textureStyle == UNI_SIDE_TEXTURED) {
 			icons = new Icon[2];
+			for (int i = 0; i < icons.length; i++) {
+				icons[i] = iconRegister.registerIcon(Reference.ID.toLowerCase() + ":" + this.getUnlocalizedName() + i);
+			}
+		} else if (textureStyle == MULTI_SIDE_TEXTURED) {
+			icons = new Icon[5];
 			for (int i = 0; i < icons.length; i++) {
 				icons[i] = iconRegister.registerIcon(Reference.ID.toLowerCase() + ":" + this.getUnlocalizedName() + i);
 			}
@@ -55,17 +64,28 @@ public class MyBlock extends Block {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int par1, int par2) {
+	public Icon getIcon(int side, int meta) {
 		if (textureStyle == UNI_TEXTURED) {
 			return blockIcon;
+		} else if (textureStyle == UNI_SIDE_TEXTURED) {
+			if (side == 0 || side == 1) {
+				// Top and bottom
+				return icons[0];
+			} else {
+				// Sides
+				return icons[1];
+			}
+
+		} else if (textureStyle == MULTI_SIDE_TEXTURED) {
+			if (side == 0 || side == 1) {
+				// Top and bottom
+				return icons[0];
+			} else {
+				// Sides
+				return icons[side - 1];
+			}
 		}
-		if (par1 == 0 || par1 == 1) {
-			// Top and bottom
-			return icons[0];
-		} else {
-			// Sides
-			return icons[1];
-		}
+		return icons[0];
 	}
 
 	public String toString() {
